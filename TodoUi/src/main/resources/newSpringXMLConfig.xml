@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+">
+<bean init-method="init" class="net.starbasic.todoui.ui.MainFrame" id="mainFrame">
+    <property name="contentPane">
+        <ref bean="mainPanel"/>
+    </property>
+    <property name="title">
+        <value>Органайзер</value>
+    </property>
+</bean>
+
+
+<bean init-method="init" class="net.starbasic.todoui.ui.BoxLayoutPanel" id="mainPanel">
+    <property name="axis">
+    <!-- "1" corresponds to BoxLayout.Y_AXIS -->
+    <!-- Spring can access constants, but it's more complex -->
+        <value>1</value>
+    </property>
+    <property name="panelComponents">
+    <list>
+        <ref bean="itemScrollPane"/>
+        <ref bean="buttonPanel"/>
+    </list>
+    </property>
+</bean>
+
+
+<bean class="javax.swing.JScrollPane" id="itemScrollPane">
+    <constructor-arg>
+        <ref bean="itemTable"/>
+    </constructor-arg>
+</bean>
+
+
+<bean class="javax.swing.JTable" id="itemTable">
+    <property name="model">
+        <ref bean="itemTableModel"/>
+    </property>
+</bean>
+
+
+<bean class="net.starbasic.todoui.ui.ItemTableModel" id="itemTableModel">
+    <property name="itemList">
+        <ref bean="itemList"/>
+    </property>
+</bean>
+
+<bean class="java.util.ArrayList" id="itemList">
+    <constructor-arg>
+        <list>
+            <value>Нагодувати дракона</value>
+            <value>Вигнати гоблінів</value>
+            <value>Зібрати мандрагору</value>
+        </list>
+    </constructor-arg>
+</bean>
+
+
+<bean init-method="init" class="net.starbasic.todoui.ui.BoxLayoutPanel" id="buttonPanel">
+    <property name="axis">
+    <!-- "0" corresponds to BoxLayout.X_AXIS -->
+        <value>0</value>
+    </property>
+    <property name="panelComponents">
+    <list>
+        <ref bean="deleteButton"/>
+        <ref bean="addNewButton"/>
+    </list>
+</property>
+
+</bean>
+
+
+<bean init-method="init" class="net.starbasic.todoui.ui.button.ActionListenerButton" id="deleteButton">
+    <property name="actionListener">
+        <ref bean="deleteButtonActionListener"/>
+    </property>
+    <property name="text">
+        <value>Викинути</value>
+    </property>
+</bean>
+
+
+<bean class="net.starbasic.todoui.ui.button.DeleteButtonActionListener" id="deleteButtonActionListener">
+    <property name="list">
+        <ref bean="itemList"/>
+    </property>
+    <property name="table">
+        <ref bean="itemTable"/>
+    </property>
+</bean>
+
+
+<bean init-method="init" class="net.starbasic.todoui.ui.button.ActionListenerButton" id="addNewButton">
+    <property name="actionListener">
+        <ref bean="addNewButtonActionListener"/>
+    </property>
+        <property name="text">
+            <value>Нове дєло!</value>
+        </property>
+</bean>
+
+
+<bean class="net.starbasic.todoui.ui.button.AddNewButtonActionListener" id="addNewButtonActionListener">
+    <property name="list">
+        <ref bean="itemList"/>
+    </property>
+    <property name="table">
+        <ref bean="itemTable"/>
+    </property>
+</bean>
+
+</beans>
