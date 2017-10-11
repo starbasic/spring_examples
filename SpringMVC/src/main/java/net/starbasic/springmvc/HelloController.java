@@ -22,7 +22,7 @@ public class HelloController {
    }
     @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index() {
-      return "hello2";
+      return "homepage";
    }
    @RequestMapping(value = "/redirect", method = RequestMethod.GET)
    public String redirect() {
